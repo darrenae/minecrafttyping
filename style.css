@@ -1,4 +1,7 @@
 :root{
+  --app-height: 100vh;
+  --kb: 0px;
+
   --bg1:#1b2a1b;
   --bg2:#2f4a2f;
   --panel:#111a11cc;
@@ -14,7 +17,9 @@ html, body{ height:100%; }
 
 body{
   margin:0;
-  height:100vh;
+  height:var(--app-height);
+  min-height:var(--app-height);
+
   overflow:hidden;
   display:flex;
   flex-direction:column;
@@ -31,7 +36,7 @@ body{
   gap:12px;
   align-items:flex-start;
   justify-content:space-between;
-  padding:10px 12px;
+  padding:10px calc(12px + env(safe-area-inset-right)) 10px calc(12px + env(safe-area-inset-left));
   background:var(--panel);
   border-bottom:2px solid var(--line);
   position:relative;
@@ -40,7 +45,9 @@ body{
 
 .hud__left button{
   margin-right:8px;
-  padding:8px 10px;
+  padding:10px 12px;
+  min-height:44px;
+  border-radius:8px;
   border:2px solid var(--line);
   background:#152415;
   color:var(--text);
@@ -81,20 +88,25 @@ body{
   min-height:0;         /* 關鍵：避免內容把高度撐爆 */
   position:relative;
   width:100%;
+  display:flex;
+  flex-direction:column;
 }
 
 #game{
   display:block;
   width:100%;
-  height:100%;
+  flex:1 1 auto;
+  min-height:0;
+  height:auto;
+  touch-action:none;
+  image-rendering: pixelated;
 }
+
 
 /* ===== Typing Bar ===== */
 .typingBar{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom: max(12px, env(safe-area-inset-bottom));
+  flex: 0 0 auto;
+  margin: 10px calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom) + var(--kb)) calc(12px + env(safe-area-inset-left));
   padding:10px 12px;
   background:var(--panel);
   border:2px solid var(--line);
@@ -104,11 +116,12 @@ body{
   z-index:12;
 }
 
+
 .typingBar__label{ font-weight:700; }
 
 #typingInput{
   flex:1;
-  padding:10px 12px;
+  padding:10px calc(12px + env(safe-area-inset-right)) 10px calc(12px + env(safe-area-inset-left));
   border:2px solid var(--line);
   background:#0f190f;
   color:var(--text);
@@ -184,8 +197,8 @@ body{
 }
 
 .modal__close{
-  width:44px;
-  height:38px;
+  width:48px;
+  height:44px;
   border:2px solid var(--line);
   background:#152415;
   color:var(--text);
@@ -261,4 +274,21 @@ body{
     align-items:stretch;
   }
   .typingBar__hint{ white-space:normal; }
+}
+
+
+/* ===== iPhone (<=430px) ===== */
+@media (max-width: 430px){
+  .hud{ padding:8px calc(10px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left)); }
+  .hud__mid{ gap:10px; font-size:12px; }
+  .hud__left button{ padding:10px 10px; min-width:72px; }
+  .hud__right{ font-size:11px; }
+  .hud__right input[type="range"]{ width:120px; }
+  #typingInput{ font-size:16px; }
+  .typingBar__hint{ display:none; }
+}
+
+/* ===== iPad portrait (<=1024px) ===== */
+@media (max-width: 1024px){
+  .hud__right{ min-width: unset; }
 }

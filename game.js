@@ -348,6 +348,39 @@ function hardClearInput(){
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener("resize", resize);
+  // ===================== RWD / iOS viewport fixes =====================
+  function setAppHeight(){
+    // Use actual innerHeight to avoid 100vh issues on iOS Safari (address bar / keyboard).
+    try{
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    }catch{}
+  }
+
+  function setKeyboardOffset(){
+    // When iOS keyboard opens, visualViewport height shrinks. We lift the typing bar via CSS var --kb.
+    const vv = window.visualViewport;
+    if(!vv){
+      try{ document.documentElement.style.setProperty('--kb', '0px'); }catch{}
+      return;
+    }
+    const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    try{ document.documentElement.style.setProperty('--kb', `${kb}px`); }catch{}
+  }
+
+  function syncViewportVars(){
+    setAppHeight();
+    setKeyboardOffset();
+    // Canvas size depends on layout; ensure we recalc after viewport changes.
+    requestAnimationFrame(resize);
+  }
+
+  window.addEventListener('orientationchange', () => setTimeout(syncViewportVars, 80));
+  window.addEventListener('resize', syncViewportVars);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', syncViewportVars);
+    window.visualViewport.addEventListener('scroll', syncViewportVars);
+  }
+
 
   // ===================== Pixel helpers =====================
   function pxRect(x,y,w,h, s=4){
@@ -647,7 +680,6 @@ const hp = MOB_HP[type] ?? 1;
 
     const mob = {
       id: uuid(),
-      kind:"enemy",
       type,
       x: rand(20, canvas.getBoundingClientRect().width - 120),
       y: -90 - rand(0,60),
@@ -680,7 +712,6 @@ const hp = MOB_HP.dragon;
     const w = 92, h = 58;
     const boss = {
       id: uuid(),
-      kind:"enemy",
       type:"dragon",
       x: (canvas.getBoundingClientRect().width/2) - w/2, // 固定掉落：中央
       y: -140,
@@ -1884,6 +1915,7 @@ typingInput?.addEventListener("compositionend", (e) => {
 
   // ===================== init =====================
   resize();
+  syncViewportVars();
   resetGame();
   rebuildPronIndex();
   applyLevel(1);
