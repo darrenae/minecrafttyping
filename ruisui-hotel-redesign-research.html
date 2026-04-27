@@ -1,115 +1,137 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>花蓮瑞穗天合｜親子度假優惠頁重設計研究版</title>
-  <meta name="description" content="以親子飯店團購業配文為案例，將促銷資訊重新整理成更清楚、可信、好讀的 HTML landing page。" />
-  <style>
-    :root {
-      --bg: #f7f2ea;
-      --paper: #fffaf2;
-      --ink: #24312f;
-      --muted: #6f7b76;
-      --line: rgba(36,49,47,.16);
-      --brand: #1f5d52;
-      --brand-2: #b77942;
-      --soft: #eadbc7;
-      --accent: #d97b4f;
-      --shadow: 0 24px 70px rgba(31, 93, 82, .13);
-      --radius: 24px;
-      --max: 1120px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      color: var(--ink);
-      background: radial-gradient(circle at top left, rgba(183,121,66,.20), transparent 34rem), linear-gradient(180deg, #faf4eb 0%, #f7f2ea 42%, #f2eadf 100%);
-      line-height: 1.75;
-    }
-    a { color: inherit; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-    .topbar { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px); background: rgba(247,242,234,.82); border-bottom: 1px solid var(--line); }
-    .topbar-inner { max-width: var(--max); margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 18px; }
-    .brandmark { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .03em; }
-    .brandmark::before { content: ""; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), #8bb7a9); box-shadow: inset 0 0 0 7px rgba(255,255,255,.35); }
-    .nav { display: flex; gap: 18px; color: var(--muted); font-size: 14px; }
-    .nav a { text-decoration: none; }
-    .hero { padding: 56px 0 42px; }
-    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 34px; align-items: center; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,250,242,.62); color: var(--brand); font-weight: 700; font-size: 14px; }
-    h1 { margin: 24px 0 18px; font-size: clamp(38px, 6vw, 70px); line-height: 1.05; letter-spacing: -.055em; }
-    .lead { font-size: clamp(18px, 2vw, 22px); color: #4b5a55; max-width: 680px; margin: 0 0 28px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 20px; border-radius: 999px; text-decoration: none; font-weight: 800; border: 1px solid transparent; }
-    .button.primary { background: var(--brand); color: white; }
-    .button.secondary { background: rgba(255,250,242,.72); border-color: var(--line); color: var(--ink); }
-    .deadline { margin-top: 22px; color: var(--muted); font-size: 14px; }
-    .visual-card { min-height: 520px; border-radius: 36px; background: linear-gradient(160deg, rgba(31,93,82,.72), rgba(31,93,82,.10)), linear-gradient(45deg, #d5bea2, #f8eadd); box-shadow: var(--shadow); padding: 22px; display: grid; align-content: end; position: relative; overflow: hidden; }
-    .visual-card::before { content: ""; position: absolute; width: 380px; height: 380px; border-radius: 48%; background: rgba(255,250,242,.19); top: -70px; right: -90px; }
-    .visual-card::after { content: "RUISUI"; position: absolute; left: 24px; top: 28px; font-size: 76px; line-height: 1; font-weight: 900; letter-spacing: -.07em; color: rgba(255,255,255,.25); }
-    .price-panel { position: relative; background: rgba(255,250,242,.92); border: 1px solid rgba(255,255,255,.65); border-radius: 26px; padding: 24px; box-shadow: 0 20px 50px rgba(36,49,47,.13); }
-    .price-panel small { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-    .price-panel strong { display: block; margin-top: 6px; font-size: 34px; line-height: 1.18; letter-spacing: -.03em; }
-    .section { padding: 44px 0; }
-    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
-    h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0; letter-spacing: -.045em; }
-    .section-note { max-width: 420px; color: var(--muted); margin: 0; }
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,250,242,.68); padding: 22px; box-shadow: 0 10px 34px rgba(36,49,47,.05); }
-    .card .num { width: 40px; height: 40px; border-radius: 14px; background: var(--soft); display: grid; place-items: center; font-weight: 900; color: var(--brand); margin-bottom: 16px; }
-    .card h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.32; }
-    .card p { margin: 0; color: var(--muted); }
-    .offer-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: var(--radius); background: rgba(255,250,242,.8); border: 1px solid var(--line); box-shadow: 0 14px 42px rgba(36,49,47,.06); }
-    .offer-table th, .offer-table td { padding: 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
-    .offer-table th { width: 26%; color: var(--brand); font-size: 15px; letter-spacing: .05em; white-space: nowrap; }
-    .offer-table tr:last-child th, .offer-table tr:last-child td { border-bottom: none; }
-    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .step { background: var(--brand); color: white; border-radius: var(--radius); padding: 22px; min-height: 180px; overflow: hidden; }
-    .step:nth-child(even) { background: #2f7268; }
-    .step span { display: inline-block; font-size: 13px; opacity: .76; margin-bottom: 22px; font-weight: 800; letter-spacing: .08em; }
-    .step h3 { margin: 0 0 8px; font-size: 23px; line-height: 1.25; }
-    .step p { margin: 0; opacity: .88; }
-    .research { display: grid; grid-template-columns: .85fr 1.15fr; gap: 18px; align-items: start; }
-    .diagnosis { background: #2a2f2d; color: white; border-radius: 28px; padding: 26px; position: sticky; top: 84px; }
-    .diagnosis h2 { color: white; }
-    .diagnosis p { color: rgba(255,255,255,.74); }
-    .principles { display: grid; gap: 14px; }
-    .principle { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 20px; background: rgba(255,250,242,.78); border: 1px solid var(--line); border-radius: 22px; }
-    .principle b { color: var(--brand); }
-    .principle p { margin: 0; color: var(--muted); }
-    .fineprint { padding: 24px; border: 1px dashed rgba(36,49,47,.25); border-radius: var(--radius); color: var(--muted); background: rgba(255,255,255,.36); font-size: 14px; }
-    footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
-    @media (max-width: 880px) {
-      .wrap { padding: 0 16px; }
-      .topbar-inner { padding: 10px 16px; }
-      .hero { padding: 38px 0 30px; }
-      .hero-grid, .research { grid-template-columns: 1fr; }
-      .visual-card { min-height: 330px; border-radius: 28px; }
-      .visual-card::after { font-size: 52px; }
-      .price-panel strong { font-size: 28px; }
-      .cards, .timeline { grid-template-columns: 1fr; }
-      .section { padding: 34px 0; }
-      .section-head { display: block; }
-      .section-note { margin-top: 12px; }
-      .offer-table th, .offer-table td { display: block; width: 100%; padding: 14px 16px; }
-      .offer-table th { padding-bottom: 4px; }
-      .principle { grid-template-columns: 1fr; }
-      .nav { display: none; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花蓮瑞穗天合｜團購文資訊架構重設計研究版</title>
+<style>
+:root{--bg:#f7f2ea;--paper:#fffaf2;--ink:#24312f;--muted:#6f7b76;--line:rgba(36,49,47,.16);--brand:#1f5d52;--gold:#b77942;--soft:#eadbc7;--accent:#d97b4f;--radius:24px;--max:1100px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:radial-gradient(circle at top left,rgba(183,121,66,.20),transparent 34rem),linear-gradient(180deg,#faf4eb 0%,#f7f2ea 48%,#f2eadf 100%);line-height:1.75}.wrap{max-width:var(--max);margin:auto;padding:0 20px}.topbar{position:sticky;top:0;z-index:10;background:rgba(247,242,234,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.topbar-inner{max-width:var(--max);margin:auto;padding:12px 20px;display:flex;justify-content:space-between;gap:18px;align-items:center}.brand{font-weight:900;display:flex;align-items:center;gap:10px}.brand:before{content:"";width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#8bb7a9);box-shadow:inset 0 0 0 7px rgba(255,255,255,.35)}nav{display:flex;gap:16px;color:var(--muted);font-size:14px;white-space:nowrap}nav a,a{color:inherit}.hero{padding:56px 0 38px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}.eyebrow{display:inline-flex;padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,250,242,.72);color:var(--brand);font-weight:800;font-size:14px}h1{font-size:clamp(38px,6vw,72px);line-height:1.05;letter-spacing:-.055em;margin:24px 0 18px}.lead{font-size:clamp(18px,2vw,22px);color:#4b5a55;margin:0 0 28px}.actions{display:flex;flex-wrap:wrap;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 20px;border-radius:999px;text-decoration:none;font-weight:900;border:1px solid transparent}.primary{background:var(--brand);color:white}.secondary{background:rgba(255,250,242,.78);border-color:var(--line)}.deadline{color:var(--muted);font-size:14px;margin-top:20px}.visual{min-height:500px;border-radius:36px;background:linear-gradient(160deg,rgba(31,93,82,.72),rgba(31,93,82,.10)),linear-gradient(45deg,#d5bea2,#f8eadd);box-shadow:0 24px 70px rgba(31,93,82,.13);padding:22px;display:grid;align-content:end;position:relative;overflow:hidden}.visual:after{content:"RUISUI";position:absolute;top:28px;left:24px;color:rgba(255,255,255,.25);font-size:76px;font-weight:900;letter-spacing:-.07em}.price{position:relative;background:rgba(255,250,242,.92);border-radius:26px;padding:24px;box-shadow:0 20px 50px rgba(36,49,47,.13)}.price small{color:var(--muted);font-weight:900;letter-spacing:.08em;text-transform:uppercase}.price strong{display:block;font-size:34px;line-height:1.18;margin-top:6px}.section{padding:42px 0}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:22px}h2{font-size:clamp(28px,4vw,44px);line-height:1.15;letter-spacing:-.045em;margin:0}.note{max-width:450px;color:var(--muted);margin:0}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card,.panel,details{border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,250,242,.76);padding:22px;box-shadow:0 10px 34px rgba(36,49,47,.05)}.metric span{color:var(--gold);font-weight:900;font-size:13px;letter-spacing:.08em;text-transform:uppercase}.metric strong{display:block;font-size:26px;line-height:1.25;margin-top:8px}.metric p,.card p,.panel p{color:var(--muted);margin:8px 0 0}.num{width:40px;height:40px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-weight:900;color:var(--brand);margin-bottom:16px}.card h3,.panel h3{margin:0 0 10px;font-size:22px;line-height:1.25}.table-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:rgba(255,250,242,.78);box-shadow:0 14px 42px rgba(36,49,47,.06)}table{width:100%;border-collapse:collapse}th,td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child th,tr:last-child td{border-bottom:0}th{width:28%;color:var(--brand);white-space:nowrap}td{color:#3d4a46}.list{margin:0;padding-left:1.2em;color:#3d4a46}.list li+li{margin-top:8px}.pill-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.pill{border-radius:999px;background:#f4e8d8;padding:4px 10px;font-weight:800;font-size:14px;color:#4b5a55}.notice{padding:18px 20px;border-left:5px solid var(--accent);background:rgba(255,250,242,.82);border-radius:18px;color:#3d4a46}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{background:var(--brand);color:white;border-radius:var(--radius);padding:22px;min-height:170px}.step:nth-child(even){background:#2f7268}.step span{font-size:13px;font-weight:900;letter-spacing:.08em;opacity:.76}.step h3{font-size:23px;margin:18px 0 8px;line-height:1.25}.step p{margin:0;opacity:.88}.research{display:grid;grid-template-columns:.85fr 1.15fr;gap:18px}.diagnosis{background:#2a2f2d;color:white;border-radius:28px;padding:26px;position:sticky;top:84px}.diagnosis p{color:rgba(255,255,255,.74)}.principle{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:20px;background:rgba(255,250,242,.78);border:1px solid var(--line);border-radius:22px}.principle+.principle{margin-top:14px}.principle b{color:var(--brand)}.principle p{margin:0;color:var(--muted)}summary{cursor:pointer;font-weight:900;color:var(--brand);font-size:20px}.raw{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.7;color:#4b5a55;background:rgba(255,255,255,.50);border:1px solid var(--line);border-radius:18px;padding:18px;overflow:auto;max-height:560px;margin-top:16px}.fine{padding:24px;border:1px dashed rgba(36,49,47,.25);border-radius:var(--radius);color:var(--muted);background:rgba(255,255,255,.36);font-size:14px}footer{padding:40px 0 60px;color:var(--muted);font-size:14px}@media(max-width:880px){.wrap,.topbar-inner{padding-left:16px;padding-right:16px}nav{display:none}.hero{padding:38px 0 30px}.hero-grid,.research,.grid2{grid-template-columns:1fr}.visual{min-height:320px;border-radius:28px}.visual:after{font-size:52px}.price strong{font-size:28px}.grid4{grid-template-columns:1fr 1fr}.grid3,.timeline{grid-template-columns:1fr}.section{padding:34px 0}.section-head{display:block}.note{margin-top:12px}th,td{display:block;width:100%;padding:13px 16px}th{padding-bottom:2px}td{padding-top:4px}.principle{grid-template-columns:1fr}}@media(max-width:420px){.grid4{grid-template-columns:1fr}.btn{width:100%}h1{font-size:38px}.eyebrow{border-radius:18px}}
+</style>
 </head>
 <body>
-  <header class="topbar"><div class="topbar-inner"><div class="brandmark">親子度假提案</div><nav class="nav" aria-label="頁面導覽"><a href="#offer">優惠重點</a><a href="#timeline">訂購流程</a><a href="#research">研究觀察</a></nav></div></header>
-  <main>
-    <section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">花蓮瑞穗天合國際觀光酒店 × 親子團購</div><h1>把「優惠很多」<br>變成「一眼看懂」。</h1><p class="lead">這是一個研究用的重設計版本：保留原本團購文最有轉換力的資訊，但改用清楚的資訊層級、低噪音配色與可掃讀的區塊，讓讀者先理解價值，再決定是否下訂。</p><div class="hero-actions"><a class="button primary" href="https://pse.is/8z66y5" target="_blank" rel="noopener">前往訂房頁</a><a class="button secondary" href="#research">看設計拆解</a></div><p class="deadline">開賣時間：2026/04/27 10:00－2026/05/04 23:59　｜　入住期間：2026/04/27－2026/08/31</p></div><aside class="visual-card" aria-label="主視覺示意"><div class="price-panel"><small>Core offer</small><strong>一泊二食＋孩童免費住＋連住兩晚 9 折</strong><p>把促銷語氣收斂成三個決策訊號：吃、住、折扣。先降低理解成本，再推進轉換。</p></div></aside></div></section>
-    <section id="offer" class="section"><div class="wrap"><div class="section-head"><h2>先給結論，再給細節</h2><p class="section-note">讀者在手機上通常不是逐字閱讀，而是快速判斷「適不適合我」。因此把優惠拆成三個利益點。</p></div><div class="cards"><article class="card"><div class="num">01</div><h3>餐食已包</h3><p>方案主打早、晚餐全包，適合不想再安排晚餐交通的家庭旅遊。</p></article><article class="card"><div class="num">02</div><h3>孩童入住優惠</h3><p>雙人房贈 1 位未滿 13 歲兒童；家庭房、旅趣房、別墅贈 2 位未滿 13 歲兒童。</p></article><article class="card"><div class="num">03</div><h3>連住誘因</h3><p>相同房型連住 2 晚以上，系統價格自動套用 9 折，適合三天兩夜行程。</p></article></div></div></section>
-    <section class="section"><div class="wrap"><div class="section-head"><h2>把雜訊整理成表格</h2><p class="section-note">原文中分散的加碼資訊，改成可比較、可截圖、可驗證的格式。</p></div><table class="offer-table"><tbody><tr><th>可訂日期</th><td>入住期間至 2026/08/31。指定連續假期 05/01－05/02、06/19－06/20 開放訂購。</td></tr><tr><th>降價與不加價</th><td>31 個指定日降價 NT$1,000；14 個指定旺日不加價。</td></tr><tr><th>房型策略</th><td>雙人、家庭、旅趣房與別墅房型分別對應不同家庭人數，避免把所有房型名稱塞在同一段文字裡。</td></tr><tr><th>加贈內容</th><td>每房每晚贈比比家族沐浴泡澡球 2 顆，款式隨機。</td></tr><tr><th>交通與付款</th><td>可預約瑞穗火車站定時定點來回接駁車乙次；專案可刷國旅卡。</td></tr></tbody></table></div></section>
-    <section id="timeline" class="section"><div class="wrap"><div class="section-head"><h2>用流程取代催促</h2><p class="section-note">高明的轉換頁不一定要一直喊「快搶」，而是讓使用者知道下一步很簡單。</p></div><div class="timeline"><div class="step"><span>STEP 1</span><h3>選日期</h3><p>先看是否落在降價日、不加價日或連假開放日。</p></div><div class="step"><span>STEP 2</span><h3>選房型</h3><p>用同行人數決定雙人房、家庭房、旅趣房或別墅。</p></div><div class="step"><span>STEP 3</span><h3>確認兒童數</h3><p>檢查未滿 13 歲兒童免費入住與含餐名額。</p></div><div class="step"><span>STEP 4</span><h3>連住比價</h3><p>若安排兩晚以上，確認系統是否已自動套用 9 折。</p></div></div></div></section>
-    <section id="research" class="section"><div class="wrap research"><aside class="diagnosis"><h2>研究觀點</h2><p>這個版本不是把促銷感拿掉，而是把促銷語氣「降噪」：保留大眾市場需要的明確利益點，同時避免每個元素都搶主視覺。</p></aside><div class="principles"><article class="principle"><b>1. 單一主張</b><p>原本所有優惠都想當標題；重設計後，主標只處理一件事：讓使用者知道這是「親子一泊二食＋兒童優惠」方案。</p></article><article class="principle"><b>2. 資訊分層</b><p>把「立即感」放在開賣與入住日期，把「價值感」放在餐食、兒童、連住折扣，把「細節」放進表格。</p></article><article class="principle"><b>3. 可信度優先</b><p>少用浮誇形容詞，多用可檢查的條件：日期、年齡、人數、折扣、是否須預約。</p></article><article class="principle"><b>4. 轉換仍然明確</b><p>CTA 固定只有一個主要動作：前往訂房頁。避免使用者在多個紅色按鈕、貼圖與跑馬文之間迷失。</p></article><article class="principle"><b>5. 親子市場不等於幼稚視覺</b><p>親子旅遊可以是溫暖、明亮、容易理解，而不必然是高飽和、滿版字、爆炸貼紙與過量驚嘆號。</p></article></div></div></section>
-    <section class="section"><div class="wrap"><div class="fineprint"><strong>研究用備註：</strong>本頁為視覺與資訊架構示範，不代表飯店或部落客官方頁面。實際價格、空房、加人加價、接駁預約、國旅卡規則與指定日條件，請以原訂房系統與飯店公告為準。</div></div></section>
-  </main>
-  <footer><div class="wrap">Demo page for editorial research. Designed to compare high-noise promotional layouts with hierarchy-driven landing pages.</div></footer>
-</body>
-</html>
+<header class="topbar"><div class="topbar-inner"><div class="brand">團購文重設計研究</div><nav><a href="#offer">優惠摘要</a><a href="#rooms">房型人數</a><a href="#rules">規則</a><a href="#research">研究觀察</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">花蓮瑞穗天合國際觀光酒店 × 寶寶溫放電趣專案</div><h1>親子度假優惠，先讓人看懂，再讓人心動。</h1><p class="lead">這一版把逐字稿中的促銷訊息重新編排：保留「搶先賣、加碼、限時」的轉換力，但改用手機友善的資訊層級，讓讀者不用在滿版驚嘆號裡找答案。</p><div class="actions"><a class="btn primary" href="https://pse.is/8z66y5" target="_blank" rel="noopener">前往訂房頁</a><a class="btn secondary" href="https://lin.ee/D21WKjd" target="_blank" rel="noopener">一對一客服</a></div><p class="deadline">開賣時間：2026/04/27 10:00－2026/05/04 23:59　｜　入住期間：2026/04/27－2026/08/31</p></div><aside class="visual"><div class="price"><small>Core offer</small><strong>NT$8,999 起／間／晚</strong><p>一泊二食早晚餐全包、孩童免費入住名額、相同房型連住兩晚以上 9 折。</p></div></aside></div></section>
+<section id="offer" class="section"><div class="wrap"><div class="section-head"><h2>把「非跟不可」拆成四個決策訊號</h2><p class="note">原文的熱鬧感不必刪掉，但要讓使用者能在 10 秒內抓到方案價值。</p></div><div class="grid4"><article class="card metric"><span>Meal</span><strong>一泊二食</strong><p>早餐、晚餐全包。</p></article><article class="card metric"><span>Kids</span><strong>未滿 13 歲</strong><p>依房型贈 1－2 位兒童入住含餐。</p></article><article class="card metric"><span>Stay longer</span><strong>連住 9 折</strong><p>相同房型連住 2 晚以上。</p></article><article class="card metric"><span>Bonus</span><strong>指定日降價</strong><p>31 個指定日降 NT$1,000；14 個旺日不加價。</p></article></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>團購專案總覽</h2><p class="note">把逐字稿中的開賣、入住、訂房、客服與注意事項集中成可核對的規格表。</p></div><div class="table-card"><table><tbody><tr><th>專案名稱</th><td>花蓮瑞穗天合國際觀光酒店 × 寶寶溫放電趣專案</td></tr><tr><th>房價</th><td>優惠房價 NT$8,999 起／間／晚。</td></tr><tr><th>開賣時間</th><td>2026/04/27 10:00－2026/05/04 23:59。</td></tr><tr><th>入住時間</th><td>2026/04/27－2026/08/31。</td></tr><tr><th>訂房連結</th><td><a href="https://pse.is/8z66y5" target="_blank" rel="noopener">https://pse.is/8z66y5</a></td></tr><tr><th>客服</th><td>團購問題可洽一對一客服：<a href="https://lin.ee/D21WKjd" target="_blank" rel="noopener">https://lin.ee/D21WKjd</a></td></tr><tr><th>訂房中心</th><td>天成飯店集團聯合訂房中心：02-8978-6688；瑞穗天合國際觀光酒店：03-887-6000。</td></tr><tr><th>付款</th><td>此專案可刷國旅卡。</td></tr></tbody></table></div></div></section>
+<section id="rooms" class="section"><div class="wrap"><div class="section-head"><h2>房型與免費兒童名額</h2><p class="note">原文中最有價值的資訊是「誰可以免費住、可住到幾人」，適合表格化。</p></div><div class="table-card"><table><tbody><tr><th>可選房型</th><td>城堡精緻客房（一大床）、城堡溫馨家庭房、親子溫馨家庭房、城堡旅趣房、莊園溫馨家庭房、格蘭水漾別墅、格蘭輕逸別墅。<div class="pill-list"><span class="pill">40 坪城堡旅趣房</span><span class="pill">25 坪莊園溫馨家庭房</span><span class="pill">別墅房型</span></div></td></tr><tr><th>雙人房</th><td>贈 1 位未滿 13 歲兒童免費入住，含早餐與晚餐。因床型大小限制，入住上限至多 2 大 1 小。</td></tr><tr><th>家庭房／旅趣房／別墅</th><td>贈 2 位未滿 13 歲兒童免費入住，含早餐與晚餐。加人加價後，最多入住 4 大 2 小。</td></tr><tr><th>超過方案人數</th><td>請於特殊需求備註，入住現場加人加價付款。贈送兒童最多 2 位，第三位需收費。</td></tr><tr><th>嬰兒備品</th><td>飯店提供嬰兒備品，但數量有限；有需求請於訂房時告知。</td></tr></tbody></table></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>五個加碼，改成「利益 → 條件」</h2><p class="note">促銷文常見問題是每個加碼都像標題；重排後讓讀者先看利益，再看條件。</p></div><div class="grid3"><article class="card"><div class="num">01</div><h3>早晚餐全包</h3><p>一泊二食方案，贈送孩童同享優惠。城堡與親子房為芳泉百匯晚餐自助 Buffet；莊園與別墅為 PRIME ONE 牛排館。</p></article><article class="card"><div class="num">02</div><h3>孩童免費住</h3><p>雙人房贈 1 位；家庭房、旅趣房與別墅贈 2 位未滿 13 歲兒童入住，並含早晚餐。</p></article><article class="card"><div class="num">03</div><h3>連住再折</h3><p>相同房型連住 2 晚以上，可再享 9 折優惠；系統價格已折扣。</p></article><article class="card"><div class="num">04</div><h3>泡澡球好禮</h3><p>每房每晚贈比比家族沐浴泡澡球 2 顆，隨機不挑款。單顆售價 NT$150。</p></article><article class="card"><div class="num">05</div><h3>連假可訂</h3><p>特別開放 2026/05/01－05/02、2026/06/19－06/20 連續假期訂購。</p></article><article class="card"><div class="num">06</div><h3>接駁與設施</h3><p>贈瑞穗火車站定時定點來回接駁車乙次，需預約；入住當日登記後可提前使用設施。</p></article></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>指定日期整理</h2><p class="note">日期資訊若藏在長段落裡，讀者很難判斷是否符合自己的假期。</p></div><div class="grid2"><article class="panel"><h3>連假與連假前夕</h3><ul class="list"><li>連假前夕及最後一日：2026/04/30、2026/06/18。</li><li>連續假日：2026/05/01－05/02、2026/06/19－06/20。</li></ul></article><article class="panel"><h3>指定旺日不加價</h3><p>2026/05/03、05/08、05/10、05/15、05/17、05/22、05/29、05/31；2026/06/05、06/07、06/12、06/14、06/18、06/21。</p></article></div><details style="margin-top:14px"><summary>展開 31 個指定日優惠價：降價 NT$1,000</summary><p>2026/04/27、04/28；2026/05/04、05/06、05/07、05/11、05/12、05/13、05/14、05/18、05/19、05/20、05/21、05/26、05/27、05/28；2026/06/02、06/03、06/04、06/08、06/09、06/10、06/11、06/15、06/16、06/17、06/22、06/24、06/25、06/29、06/30。</p></details></div></section>
+<section id="rules" class="section"><div class="wrap"><div class="section-head"><h2>訂房小提醒</h2><p class="note">這些是轉換前最容易造成客服問題的內容，應該放在 CTA 旁邊或訂房前。</p></div><div class="grid2"><article class="panel"><h3>入住與設施</h3><ul class="list"><li>酒店入住時間為 15:00 之後，退房時間為 11:00 之前。</li><li>酒店設施可於入住當日先辦理入住登記後提前使用。</li><li>退房日設施最晚可使用到當天 15:00。</li><li>一起環保愛地球，不提供一次性包裝備品。</li></ul></article><article class="panel"><h3>免費暢遊設施</h3><ul class="list"><li>金色水樂園、室內滑水道、按摩水療池、兒童戲水區。</li><li>跑跑甩尾車、兒童超跑俱樂部、無限樂園、小旅人樂園、電競室。</li></ul></article></div><div class="notice" style="margin-top:16px">優惠方案僅限免費取消日期前可更改乙次，更改後不可再次更改或取消。</div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>餐廳更換與加價</h2><p class="note">把容易漏看的餐廳規則獨立出來，降低現場期待落差。</p></div><div class="table-card"><table><tbody><tr><th>城堡／親子房</th><td>早餐與晚餐為芳泉百匯晚餐自助 Buffet。</td></tr><tr><th>莊園／別墅房型</th><td>早餐與晚餐為 PRIME ONE 牛排館。</td></tr><tr><th>Buffet 改牛排館</th><td>訂購城堡與親子房三天兩夜，晚餐想改在牛排館用餐，可於入住當日現場詢問櫃檯是否有空位並加價；成人 NT$550、小孩 NT$220。</td></tr><tr><th>牛排館改 Buffet</th><td>訂購莊園與別墅房型三天兩夜，晚餐想改在芳泉百匯用餐，可於入住當日現場詢問櫃檯是否有空位；更改不需費用。</td></tr></tbody></table></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>假日加價與加人加價</h2><p class="note">價格規則若只用段落呈現，會讓讀者低估總價；表格化後更透明。</p></div><div class="grid2"><article class="panel"><h3>房型假日加價</h3><ul class="list"><li>旺日：週五、週日及連假前後，每房每晚加價 NT$550。</li><li>假日：週六，每房每晚加價 NT$1,100。</li><li>大假日：暑假週六、2026/05/01－05/02、2026/06/19－06/20，每房每晚加價 NT$2,200。</li></ul></article><article class="panel"><h3>加人加價</h3><ul class="list"><li>0－2 歲：免費招待；雙人房乙位、家庭房至多二位。</li><li>3－12 歲：城堡及親子別墅區 NT$1,750；莊園區、格蘭別墅區 NT$2,000。</li><li>13 歲以上成人：城堡及親子別墅區 NT$3,500；莊園區、格蘭別墅區 NT$4,000。</li><li>加人加價含早餐、晚餐以及金色水樂園門票，入住當日現場支付。</li></ul></article></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>免費接駁與取消政策</h2><p class="note">高風險資訊應該清楚呈現，而不是藏在文末。</p></div><div class="grid2"><article class="panel"><h3>瑞穗火車站接駁</h3><ul class="list"><li>瑞穗火車站 → 飯店接駁車至瑞穗天合國際觀光酒店。</li><li>請於搭車日前三天以電話預約；取消需於發車前三小時告知。</li><li>瑞穗火車站搭車位置：西站出口。</li><li>酒店搭車位置：城堡大廳。</li></ul></article><article class="panel"><h3>取消費用</h3><ul class="list"><li>入住日 14 天含以前：不收費。</li><li>入住日 13－10 天：收取總訂單 30%。</li><li>入住日 9－7 天：收取總訂單 50%。</li><li>入住日 6－4 天：收取總訂單 60%。</li><li>入住日 3－2 天：收取總訂單 70%。</li><li>入住日 1 天：收取總訂單 80%。</li><li>入住日當天：收取總訂單 100%。</li></ul></article></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><h2>手機使用者的訂購流程</h2><p class="note">用流程取代吼叫式催促，讓使用者知道下一步很簡單。</p></div><div class="timeline"><div class="step"><span>STEP 1</span><h3>選日期</h3><p>先看是否落在降價日、不加價日或連假開放日。</p></div><div class="step"><span>STEP 2</span><h3>選房型</h3><p>用同行人數決定雙人房、家庭房、旅趣房或別墅。</p></div><div class="step"><span>STEP 3</span><h3>確認兒童數</h3><p>未滿 13 歲兒童免費入住，請在系統上直接選。</p></div><div class="step"><span>STEP 4</span><h3>連住比價</h3><p>選入住兩晚以上，系統價格會自動打 9 折。</p></div></div></div></section>
+<section id="research" class="section"><div class="wrap research"><aside class="diagnosis"><h2>研究觀點</h2><p>這個版本不是把促銷感拿掉，而是把促銷語氣「降噪」：保留大眾市場需要的明確利益點，同時避免每個元素都搶主視覺。</p></aside><div><article class="principle"><b>1. 單一主張</b><p>原逐字稿同時推「終於來了、超優惠、加碼、錯過不知道等多久」。重設計後，主標只處理一件事：親子飯店優惠要先看懂。</p></article><article class="principle"><b>2. 資訊分層</b><p>把「立即感」放在開賣與入住日期，把「價值感」放在餐食、兒童、連住折扣，把「風險資訊」放到規則區。</p></article><article class="principle"><b>3. 可信度優先</b><p>少用浮誇形容詞，多用可檢查條件：日期、年齡、人數、折扣、加價、取消費。</p></article><article class="principle"><b>4. 轉換仍然明確</b><p>主要 CTA 只有一個訂房連結；客服連結是輔助行動，不跟訂房按鈕搶注意力。</p></article><article class="principle"><b>5. 親子市場不等於幼稚視覺</b><p>親子旅遊可以是溫暖、明亮、容易理解，而不必然是高飽和、滿版字、爆炸貼紙與過量驚嘆號。</p></article></div></div></section>
+<section class="section"><div class="wrap"><details><summary>研究附錄：原始逐字稿</summary><div class="raw">大家敲碗的「花蓮瑞穗天合國際觀光酒店」團購終於來了!! 2026/8/31前檔期搶先賣，一泊二食早晚餐全包方案，連住相同房型兩晚以上再享9折價，家庭房、旅趣房及別墅贈兩位未滿13歲小孩入住(含早晚餐) ，40坪一房一廳的城堡旅趣房、25坪大客廳的莊園溫馨家庭房這次都訂的到，一家子可以一起入住省很大，可刷國旅卡，把握這波超優惠團購，錯過不知道要等多久
+
+這團為什麼非跟不可，加碼快看?
+一泊二食早晚餐方案，贈孩童免費住，連住相同房型兩晚以上享9折，獨家加碼要把握住!
+HOT! 2026早鳥團～可訂到2026/8/31
+加碼 31個指定日降價$1000、14個指定旺日不加價
+加碼 直接三天兩夜訂下去，享九折優惠
+加碼一：一泊二食早晚餐全包，贈送孩童同享優惠
+加碼二：雙人房贈一位、家庭房/旅趣房/別墅贈兩位未滿13歲兒童免費入住(含早晚餐)
+加碼三：三天兩夜玩透透~相同房型連住2晚以上 可再享9折優惠 (系統上價格已折扣)
+加碼四：每房每晚贈比比家族沐浴泡澡球2顆（隨機不挑款）
+加碼五：特別開放連續假期 5/1-2、6/19-20 可訂購
+★贈瑞穗火車站定時定點來回接駁車乙次(需預約)
+★此專案可刷國旅卡
+
+花蓮瑞穗天合國際觀光酒店 X 寶寶溫放電趣專案!!
+開賣時間：2026/4/27 10:00 ~5/4 23:59
+入住時間：2026/4/27~2026/8/31
+★ 這裡訂: https://pse.is/8z66y5
+**選入住兩晚以上，系統價格會自動打9折優惠
+**超過團購方案人數，請於現場加人加價
+團購上有問題，有一對一客服 https://lin.ee/D21WKjd
+
+▼▼▼訂房小提醒▼▼▼
+**訂購三天兩夜，相同房型連住2晚以上，享9折優惠 (系統上價格已折扣)
+**贈送未滿13歲兒童免費住，都請系統上直接選，不會被加價，超過團購方案的人數，請於特殊需求備註，現場付款
+**城堡精緻客房贈一位未滿13歲小孩入住
+**家庭房及別墅贈兩位未滿13歲小孩入住
+**雙人房因床型大小限制,入住上限至多2大1小入住。
+**家庭房、旅趣房及別墅加人加價後，最多入住4大2小
+**飯店有提供嬰兒備品數量有限，如有需求請於訂房時告知
+**酒店設施可於入住當日先辦理入住登記後，即可提前使用。退房日最晚可使用到當天15:00。
+**一起環保愛地球，不提供一次性包裝備品
+**這次是瑞穗天合官網直接訂房，系統上直接選，先搶先贏
+**訂房相關問題可直接詢問飯店 ※ 02-8978-6688(天成飯店集團聯合訂房中心)
+
+花蓮瑞穗天合專案介紹
+花蓮瑞穗天合這次開團，直接幫你晚餐、早餐都包含了，一泊二食超優惠，還送未滿13歲入住，同享所有優惠，讓你全家同遊睡好吃好玩好玩滿，此次專案房型都可以選
+房型：城堡精緻客房(一大床)/城堡溫馨家庭房/親子溫馨家庭房/城堡旅趣房/莊園溫馨家庭房/格蘭水漾別墅/格蘭輕逸別墅
+優惠房價：$8999 起/間/晚
+➽城堡精緻客房贈一位未滿13歲(含早晚餐)
+➽家庭房、旅趣房、別墅贈兩位未滿13歲(含早晚餐)
+**超過團購方案的人數，加人部分現場付款
+
+★ 這裡訂: https://pse.is/8z66y5
+
+連假前夕及最後一日：4/30、6/18
+連續假日：5/1-2、6/19-20
+指定日優惠價：
+4/27、4/28；
+5/4、5/6、5/7、5/11、5/12、5/13、5/14、5/18、5/19、5/20、5/21、5/26、5/27、5/28；
+6/2、6/3、6/4、6/8、6/9、6/10、6/11、6/15、6/16、6/17、6/22、6/24、6/25、6/29、6/30
+指定旺日不加價：
+5/3、5/8、5/10、5/15、5/17、5/22、5/29、5/31；
+6/5、6/7、6/12、6/14、6/18、6/21
+
+專案內容：
+加碼一：相同房型連住2晚以上可再享9折優惠
+加碼二：贈未滿13歲兒童免費入住~雙人房一位；家庭房、旅趣房及別墅兩位(含早晚餐)
+加碼三：指定日優惠降價$1000
+加碼四：指定旺日不加價
+加碼五：每房每晚贈比比家族沐浴泡澡球2顆（隨機不挑款）
+★含2客早餐及晚餐
+★免費暢遊金色水樂園、室內滑水道、按摩水療池、兒童戲水區
+★免費暢遊跑跑甩尾車、兒童超跑俱樂部、無限樂園、小旅人樂園、電競室。
+★贈瑞穗火車站定時定點來回接駁車乙次(需預約)
+**使用酒店設施可於入住當日先辦理入住登記後，即可提前使用。退房日最晚可使用到當天15:00。
+**城堡跟親子房早餐/晚餐~芳泉百匯晚餐自助Buffet
+**莊園及別墅房型早餐/晚餐~PRIME ONE牛排館
+**訂購城堡跟親子房三天兩夜晚餐想改在牛排館用餐，入住當日可現場詢問櫃檯是否有空位可以加價，費用成人550元、小孩220元
+**訂購莊園及別墅房型三天兩夜晚餐想改在芳泉百匯用餐，入住當日可現場詢問櫃檯是否有空位，更改不需要費用
+酒店入住時間為15:00之後，退房時間為11:00之前。
+★優惠方案僅限免費取消日期前可更改乙次，更改後不可再次更改或取消
+
+【房型假日加價說明】
+旺日(週五、日及連假前後) 每房每晚加價$550
+假日(週六) 每房每晚加價$1,100
+大假日(暑假週六、5/1-2、6/19-20) 每房每晚加價$2,200
+
+【加人加價說明】(含早餐、晚餐以及金色水樂園門票) 加人加價為入住當日現場支付
+# 0-2歲 免費招待 雙人房乙位 家庭房至多二位
+>3-12歲 每人每晚
+．城堡及親子別墅區 平、旺、假日$1,750大假日
+．莊園區、格蘭別墅區 平、旺、假日$2,000大假日
+>>13歲以上成人 每人每晚
+．城堡及親子別墅區 平、旺、假日$3,500大假日
+．莊園區、格蘭別墅區 平、旺、假日$4,000大假日
+**注意: 贈送兒童最多兩位，第三位需收費
+
+【免費接駁】
+瑞穗火車站→搭乘飯店接駁車至瑞穗天合國際觀光酒店（請於三天前來電預約）
+■預約方式：請於搭車日前三天以電話預約，如欲取消，請於發車前三小時告知。
+■瑞穗火車站搭車位置：瑞穗火車站(西站出口)。
+■酒店搭車位置：城堡大廳。
+※請於三天前來電預約：天成飯店集團 聯合訂房中心02-8978-6688，或瑞穗天合國際觀光酒店03-887-6000。客房內請直撥櫃檯預約
+
+【取消政策】
+入住日14天(含)前不收費
+入住日13~10天(含)收取總訂單30%取消費
+入住日9~7天(含)收取總訂單50%取消費
+入住日6~4天(含)收取總訂單60%取消費
+入住日3~2天(含)收取總訂單70%取消費
+入住日1天(含)收取總訂單80%取消費
+入住日當天收取總訂單100%取消費
+★優惠方案僅限免費取消日期前可更改乙次，更改後不可再次更改或取消
+
+加碼好禮：贈比比家族沐浴泡澡球2顆(隨機不挑款）
+天成飯店集團比比家族沐浴泡澡球(單顆售價150元)
+每顆泡澡球有不同的專屬優質香氛，內藏可愛討喜的代言人公仔，於泡澡過程中釋放療癒香氣，最後驚喜現身的卡哇伊公仔，讓大小朋友充滿期待，親子同樂增添互動時光，兼具趣味與收藏。</div></details></div></section>
+<section class="section"><div class="wrap"><div class="fine"><strong>研究用備註：</strong>本頁為視覺與資訊架構示範，不代表飯店、部落客或訂房系統官方頁面。實際價格、空房、加人加價、接駁預約、國旅卡規則與指定日條件，請以原訂房系統與飯店公告為準。</div></div></section>
+</main><footer><div class="wrap">Demo page for editorial research. Designed to compare high-noise promotional layouts with hierarchy-driven landing pages.</div></footer>
+</body></html>
