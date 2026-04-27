@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>花蓮瑞穗天合｜親子度假優惠頁重設計研究版</title>
+  <meta name="description" content="以親子飯店團購業配文為案例，將促銷資訊重新整理成更清楚、可信、好讀的 HTML landing page。" />
+  <style>
+    :root {
+      --bg: #f7f2ea;
+      --paper: #fffaf2;
+      --ink: #24312f;
+      --muted: #6f7b76;
+      --line: rgba(36,49,47,.16);
+      --brand: #1f5d52;
+      --brand-2: #b77942;
+      --soft: #eadbc7;
+      --accent: #d97b4f;
+      --shadow: 0 24px 70px rgba(31, 93, 82, .13);
+      --radius: 24px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, rgba(183,121,66,.20), transparent 34rem), linear-gradient(180deg, #faf4eb 0%, #f7f2ea 42%, #f2eadf 100%);
+      line-height: 1.75;
+    }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .topbar { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px); background: rgba(247,242,234,.82); border-bottom: 1px solid var(--line); }
+    .topbar-inner { max-width: var(--max); margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+    .brandmark { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .03em; }
+    .brandmark::before { content: ""; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), #8bb7a9); box-shadow: inset 0 0 0 7px rgba(255,255,255,.35); }
+    .nav { display: flex; gap: 18px; color: var(--muted); font-size: 14px; }
+    .nav a { text-decoration: none; }
+    .hero { padding: 56px 0 42px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 34px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,250,242,.62); color: var(--brand); font-weight: 700; font-size: 14px; }
+    h1 { margin: 24px 0 18px; font-size: clamp(38px, 6vw, 70px); line-height: 1.05; letter-spacing: -.055em; }
+    .lead { font-size: clamp(18px, 2vw, 22px); color: #4b5a55; max-width: 680px; margin: 0 0 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 20px; border-radius: 999px; text-decoration: none; font-weight: 800; border: 1px solid transparent; }
+    .button.primary { background: var(--brand); color: white; }
+    .button.secondary { background: rgba(255,250,242,.72); border-color: var(--line); color: var(--ink); }
+    .deadline { margin-top: 22px; color: var(--muted); font-size: 14px; }
+    .visual-card { min-height: 520px; border-radius: 36px; background: linear-gradient(160deg, rgba(31,93,82,.72), rgba(31,93,82,.10)), linear-gradient(45deg, #d5bea2, #f8eadd); box-shadow: var(--shadow); padding: 22px; display: grid; align-content: end; position: relative; overflow: hidden; }
+    .visual-card::before { content: ""; position: absolute; width: 380px; height: 380px; border-radius: 48%; background: rgba(255,250,242,.19); top: -70px; right: -90px; }
+    .visual-card::after { content: "RUISUI"; position: absolute; left: 24px; top: 28px; font-size: 76px; line-height: 1; font-weight: 900; letter-spacing: -.07em; color: rgba(255,255,255,.25); }
+    .price-panel { position: relative; background: rgba(255,250,242,.92); border: 1px solid rgba(255,255,255,.65); border-radius: 26px; padding: 24px; box-shadow: 0 20px 50px rgba(36,49,47,.13); }
+    .price-panel small { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .price-panel strong { display: block; margin-top: 6px; font-size: 34px; line-height: 1.18; letter-spacing: -.03em; }
+    .section { padding: 44px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0; letter-spacing: -.045em; }
+    .section-note { max-width: 420px; color: var(--muted); margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,250,242,.68); padding: 22px; box-shadow: 0 10px 34px rgba(36,49,47,.05); }
+    .card .num { width: 40px; height: 40px; border-radius: 14px; background: var(--soft); display: grid; place-items: center; font-weight: 900; color: var(--brand); margin-bottom: 16px; }
+    .card h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.32; }
+    .card p { margin: 0; color: var(--muted); }
+    .offer-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: var(--radius); background: rgba(255,250,242,.8); border: 1px solid var(--line); box-shadow: 0 14px 42px rgba(36,49,47,.06); }
+    .offer-table th, .offer-table td { padding: 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    .offer-table th { width: 26%; color: var(--brand); font-size: 15px; letter-spacing: .05em; white-space: nowrap; }
+    .offer-table tr:last-child th, .offer-table tr:last-child td { border-bottom: none; }
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .step { background: var(--brand); color: white; border-radius: var(--radius); padding: 22px; min-height: 180px; overflow: hidden; }
+    .step:nth-child(even) { background: #2f7268; }
+    .step span { display: inline-block; font-size: 13px; opacity: .76; margin-bottom: 22px; font-weight: 800; letter-spacing: .08em; }
+    .step h3 { margin: 0 0 8px; font-size: 23px; line-height: 1.25; }
+    .step p { margin: 0; opacity: .88; }
+    .research { display: grid; grid-template-columns: .85fr 1.15fr; gap: 18px; align-items: start; }
+    .diagnosis { background: #2a2f2d; color: white; border-radius: 28px; padding: 26px; position: sticky; top: 84px; }
+    .diagnosis h2 { color: white; }
+    .diagnosis p { color: rgba(255,255,255,.74); }
+    .principles { display: grid; gap: 14px; }
+    .principle { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 20px; background: rgba(255,250,242,.78); border: 1px solid var(--line); border-radius: 22px; }
+    .principle b { color: var(--brand); }
+    .principle p { margin: 0; color: var(--muted); }
+    .fineprint { padding: 24px; border: 1px dashed rgba(36,49,47,.25); border-radius: var(--radius); color: var(--muted); background: rgba(255,255,255,.36); font-size: 14px; }
+    footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 880px) {
+      .wrap { padding: 0 16px; }
+      .topbar-inner { padding: 10px 16px; }
+      .hero { padding: 38px 0 30px; }
+      .hero-grid, .research { grid-template-columns: 1fr; }
+      .visual-card { min-height: 330px; border-radius: 28px; }
+      .visual-card::after { font-size: 52px; }
+      .price-panel strong { font-size: 28px; }
+      .cards, .timeline { grid-template-columns: 1fr; }
+      .section { padding: 34px 0; }
+      .section-head { display: block; }
+      .section-note { margin-top: 12px; }
+      .offer-table th, .offer-table td { display: block; width: 100%; padding: 14px 16px; }
+      .offer-table th { padding-bottom: 4px; }
+      .principle { grid-template-columns: 1fr; }
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner"><div class="brandmark">親子度假提案</div><nav class="nav" aria-label="頁面導覽"><a href="#offer">優惠重點</a><a href="#timeline">訂購流程</a><a href="#research">研究觀察</a></nav></div></header>
+  <main>
+    <section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">花蓮瑞穗天合國際觀光酒店 × 親子團購</div><h1>把「優惠很多」<br>變成「一眼看懂」。</h1><p class="lead">這是一個研究用的重設計版本：保留原本團購文最有轉換力的資訊，但改用清楚的資訊層級、低噪音配色與可掃讀的區塊，讓讀者先理解價值，再決定是否下訂。</p><div class="hero-actions"><a class="button primary" href="https://pse.is/8z66y5" target="_blank" rel="noopener">前往訂房頁</a><a class="button secondary" href="#research">看設計拆解</a></div><p class="deadline">開賣時間：2026/04/27 10:00－2026/05/04 23:59　｜　入住期間：2026/04/27－2026/08/31</p></div><aside class="visual-card" aria-label="主視覺示意"><div class="price-panel"><small>Core offer</small><strong>一泊二食＋孩童免費住＋連住兩晚 9 折</strong><p>把促銷語氣收斂成三個決策訊號：吃、住、折扣。先降低理解成本，再推進轉換。</p></div></aside></div></section>
+    <section id="offer" class="section"><div class="wrap"><div class="section-head"><h2>先給結論，再給細節</h2><p class="section-note">讀者在手機上通常不是逐字閱讀，而是快速判斷「適不適合我」。因此把優惠拆成三個利益點。</p></div><div class="cards"><article class="card"><div class="num">01</div><h3>餐食已包</h3><p>方案主打早、晚餐全包，適合不想再安排晚餐交通的家庭旅遊。</p></article><article class="card"><div class="num">02</div><h3>孩童入住優惠</h3><p>雙人房贈 1 位未滿 13 歲兒童；家庭房、旅趣房、別墅贈 2 位未滿 13 歲兒童。</p></article><article class="card"><div class="num">03</div><h3>連住誘因</h3><p>相同房型連住 2 晚以上，系統價格自動套用 9 折，適合三天兩夜行程。</p></article></div></div></section>
+    <section class="section"><div class="wrap"><div class="section-head"><h2>把雜訊整理成表格</h2><p class="section-note">原文中分散的加碼資訊，改成可比較、可截圖、可驗證的格式。</p></div><table class="offer-table"><tbody><tr><th>可訂日期</th><td>入住期間至 2026/08/31。指定連續假期 05/01－05/02、06/19－06/20 開放訂購。</td></tr><tr><th>降價與不加價</th><td>31 個指定日降價 NT$1,000；14 個指定旺日不加價。</td></tr><tr><th>房型策略</th><td>雙人、家庭、旅趣房與別墅房型分別對應不同家庭人數，避免把所有房型名稱塞在同一段文字裡。</td></tr><tr><th>加贈內容</th><td>每房每晚贈比比家族沐浴泡澡球 2 顆，款式隨機。</td></tr><tr><th>交通與付款</th><td>可預約瑞穗火車站定時定點來回接駁車乙次；專案可刷國旅卡。</td></tr></tbody></table></div></section>
+    <section id="timeline" class="section"><div class="wrap"><div class="section-head"><h2>用流程取代催促</h2><p class="section-note">高明的轉換頁不一定要一直喊「快搶」，而是讓使用者知道下一步很簡單。</p></div><div class="timeline"><div class="step"><span>STEP 1</span><h3>選日期</h3><p>先看是否落在降價日、不加價日或連假開放日。</p></div><div class="step"><span>STEP 2</span><h3>選房型</h3><p>用同行人數決定雙人房、家庭房、旅趣房或別墅。</p></div><div class="step"><span>STEP 3</span><h3>確認兒童數</h3><p>檢查未滿 13 歲兒童免費入住與含餐名額。</p></div><div class="step"><span>STEP 4</span><h3>連住比價</h3><p>若安排兩晚以上，確認系統是否已自動套用 9 折。</p></div></div></div></section>
+    <section id="research" class="section"><div class="wrap research"><aside class="diagnosis"><h2>研究觀點</h2><p>這個版本不是把促銷感拿掉，而是把促銷語氣「降噪」：保留大眾市場需要的明確利益點，同時避免每個元素都搶主視覺。</p></aside><div class="principles"><article class="principle"><b>1. 單一主張</b><p>原本所有優惠都想當標題；重設計後，主標只處理一件事：讓使用者知道這是「親子一泊二食＋兒童優惠」方案。</p></article><article class="principle"><b>2. 資訊分層</b><p>把「立即感」放在開賣與入住日期，把「價值感」放在餐食、兒童、連住折扣，把「細節」放進表格。</p></article><article class="principle"><b>3. 可信度優先</b><p>少用浮誇形容詞，多用可檢查的條件：日期、年齡、人數、折扣、是否須預約。</p></article><article class="principle"><b>4. 轉換仍然明確</b><p>CTA 固定只有一個主要動作：前往訂房頁。避免使用者在多個紅色按鈕、貼圖與跑馬文之間迷失。</p></article><article class="principle"><b>5. 親子市場不等於幼稚視覺</b><p>親子旅遊可以是溫暖、明亮、容易理解，而不必然是高飽和、滿版字、爆炸貼紙與過量驚嘆號。</p></article></div></div></section>
+    <section class="section"><div class="wrap"><div class="fineprint"><strong>研究用備註：</strong>本頁為視覺與資訊架構示範，不代表飯店或部落客官方頁面。實際價格、空房、加人加價、接駁預約、國旅卡規則與指定日條件，請以原訂房系統與飯店公告為準。</div></div></section>
+  </main>
+  <footer><div class="wrap">Demo page for editorial research. Designed to compare high-noise promotional layouts with hierarchy-driven landing pages.</div></footer>
+</body>
+</html>
